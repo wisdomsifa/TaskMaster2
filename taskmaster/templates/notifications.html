@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: black;
+}
+
+/* Dark Mode Styling */
+body.dark-mode {
+    background-color: #00c853; /* Green background in dark mode */
+    color: white;
+}
+
+body.dark-mode .header {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+body.dark-mode .container .right-panel {
+    background-color: #333;
+    color: white;
+    border: none; /* Remove border in dark mode */
+}
+
+body.dark-mode .container .right-panel .task-details-box, .attachment-container, .link-container {
+    background-color: #ddddddd5;
+    color: #000;
+}
+
+body.dark-mode .container .right-panel .attachment-container {
+    background-color: #ddddddd5;
+    color: #000;
+}
+body.dark-mode .container .right-panel .link-container {
+    background-color: #ddddddd5;
+    color: #000;
+}
+
+body.dark-mode .container .right-panel .task-description {
+    background-color: #ddddddd5;
+    color: #000;
+}
+
+body.dark-mode .container .left-panel {
+    color: black;
+}
+
+body.dark-mode .container .task-item {
+    background-color: #ddd;
+}
+
+body.dark-mode .sidebar {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .sidebar a {
+    color: #00e676;
+}
+
+body.dark-mode .sidebar a i{
+    color: #00e676;
+}
+
+body.dark-mode .sidebar a:hover i{
+    color: white;
+}
+
+body.dark-mode .sidebar a:hover{
+    color: green;
+}
+body.dark-mode .create-task-btn {
+    background-color: green;
+}
+
+body.dark-mode .open-btn{
+    color: black;
+    background-color: #00e676;
+}
+
+/* Light Mode Borders */
+body:not(.dark-mode) .form-container {
+    border: 2px solid green; /* Green border */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.5); /* Shadow effect */
+}
+
+body:not(.dark-mode) .header {
+    border-bottom: 2px solid green; /* Green border bottom */
+    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.5); /* Shadow effect */
+}
+
+body:not(.dark-mode) .sidebar {
+    border-left: 2px solid green; /* Green left border */
+}
+
+body:not(.dark-mode) .container .right-panel{
+    border: 2px solid green;
+    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.5);
+}
+
+body:not(.dark-mode) .container .left-panel .completed-tasks .task-item {
+    border: 2px solid green;
+    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.5);
+}
+
+
+
+/* Header */
+.header {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 24px;
+    color: green;
+}
+
+/* Sidebar */
+.sidebar {
+    height: 100%;
+    width: 80px; /* Partially collapsed width */
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+    transition: width 0.5s; /* Smooth transition for width */
+    padding-top: 70px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure sidebar is on top */
+}
+
+.sidebar.expanded {
+    width: 250px; /* Expanded width */
+}
+
+.sidebar a {
+    padding: 10px 25px; /* Increased top and bottom padding for more line spacing */
+    text-decoration: none;
+    font-size: 18px;
+    color: green; /* Change icon color to green */
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+    font-weight: 100;
+    margin: 5px 0;
+}
+
+.sidebar a:hover {
+    background-color: #00c853;
+}
+
+.sidebar a i {
+    margin-right: 15px;
+    font-size: 18px;
+    color: green; /* Change icon color to green */
+}
+
+.sidebar a:hover i {
+    color: white;
+}
+
+/* Close Button */
+.sidebar .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px; /* Same size as hamburger icon */
+    color: black;
+    cursor: pointer;
+    display: none; /* Hide initially */
+}
+
+/* Hamburger Icon */
+.open-btn {
+    padding: 10px 15px;
+    font-size: 25px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: black;
+    border-radius: 5px;
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 1001; /* Ensure button is on top */
+    margin-bottom: 20px; /* Increased margin below the hamburger icon */
+}
+
+button {
+    
+    background-color: #00c853;
+    transition: background-color 0.3s ease;
+    
+}
+
+
+button:hover {
+    background-color: #008c4f;
+}
+
+/* Hide/show icons and text */
+.sidebar a span {
+    display: none;
+}
+
+.sidebar.expanded a span {
+    display: inline; /* Show text in expanded mode */
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    display: flex;
+    gap: 20px;
+}
+
+/* Left side: Tasks and notifications */
+.left-panel {
+    flex: 2;
+}
+
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.srch-btn {
+    padding: 10px 20px;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.stay-updated {
+    margin-bottom: 20px;
+}
+
+.completed-tasks {
+    margin-bottom: 30px;
+}
+
+.task-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.task-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.task-info {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.task-complete {
+    color: #00c853;
+    font-size: 18px;
+}
+
+/* Right side: Task details */
+.right-panel {
+    flex: 3;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+.task-detail-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.task-details-box {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-detail {
+    margin-bottom: 10px;
+}
+
+.task-detail span {
+    color: #666;
+}
+
+.task-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.archive-btn {
+    background-color: #00c853;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.delete-btn {
+    background-color: #d32f2f;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.archive-btn:hover{
+    background-color: green;
+} 
+
+.delete-btn:hover{
+    background-color: #a72727;
+}
+
+
+.attachment-container, .link-container {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.attach-btn {
+    background-color: transparent;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-color: green;
+}
+
+.attach-btn:hover{
+    background-color: #00c853;
+    color: white;
+}
+
+.attach-status {
+    color: #666;
+}
+
+/* Task description section */
+.task-description {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.task-description h3 {
+    margin-bottom: 10px;
+}
+
+.task-description p {
+    color: #666;
+}
+
+
+
+
+
+
+/* Add a green circle at the center of the page */
+.circle-center {
+    width: 300px; /* Diameter of the circle */
+    height: 700px;
+    background-color: rgb(0, 170, 0);
+    border-radius: 50%; /* Makes the shape a circle */
+    position: fixed; /* Stays fixed at the bottom left */
+    bottom: -8%; /* 20px from the bottom */
+    left: 10%; /* 20px from the left */
+    z-index: -1; /* Ensures the circle appears on top */
+}
+
+    </style>
+</head>
+<body>
+    
+    <div class="sidebar" id="mySidebar">
+        <a href="javascript:void(0)" class="close-btn" id="closeBtn" onclick="closeNav()">&times;</a>
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> <span>Home</span></a>
+        <a href="{{ url_for('task') }}"><i class="fas fa-plus"></i><span>Create Task</span></a>
+        <a href="{{ url_for('dashboard') }}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+        <a href="{{ url_for('calendar') }}"><i class="fas fa-calendar-alt"></i><span>Calendar</span></a>
+        <a href="{{ url_for('notifications') }}"><i class="fas fa-bell"></i> <span>Notifications</span></a>
+        <a href="{{ url_for('contact') }}"><i class="fas fa-envelope"></i><span>Contact</span></a>
+        <a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> <span>Profile</span></a>
+        <a href="#" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> <span>Dark Mode</span></a>
+        <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+    </div>
+
+    
+    <button class="open-btn" id="openSidebarBtn" onclick="openNav()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    
+    <div class="header">
+        <h1><i class="fas fa-tasks"></i> <span class="taskmaster-text">TaskMaster</span></h1>
+    </div>
+
+
+    <div class="container">
+        <!-- Left panel with tasks and notifications -->
+        <div class="left-panel">
+            <div class="search-container">
+                <input type="text" placeholder="Search tasks...">
+                <button class="srch-btn">Search</button>
+            </div>
+            <div class="stay-updated">
+                <h2>Stay Updated with Notifications</h2>
+            </div>
+            <div class="completed-tasks">
+                <h3>Completed Tasks</h3>
+                <div class="task-item">
+                    <div class="task-title">Task 1</div>
+                    <div class="task-info">Part of task description goes here...</div>
+                    <div class="task-complete">&#10003;</div>
+                </div>
+                <div class="task-item">
+                    <div class="task-title">Task 2</div>
+                    <div class="task-info">Part of task description goes here...</div>
+                    <div class="task-complete">&#10003;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right panel with task details -->
+        <div class="right-panel">
+            <h2 class="task-detail-title">Task Details</h2>
+            <div class="task-details-box">
+                <div class="task-detail">Due Date: <span>12/10/2024</span></div>
+                <div class="task-detail">Priority: <span>High</span></div>
+                <div class="task-detail">Assignee: <span>John Doe</span></div>
+                <div class="task-detail">Status: <span>Completed</span></div>
+            </div>
+
+            <div class="attachment-container">
+                <div class="attach-status">No attachments</div>
+                <button class="attach-btn">Attach File</button>
+            </div>
+
+            <div class="link-container">
+                <div class="attach-status">No related links</div>
+                <button class="attach-btn">Add Link</button>
+            </div>
+
+            
+            <div class="task-description">
+                <h3>Task Description</h3>
+                <p><strong>Task Title:</strong> Task 1</p>
+                <p>This is a detailed description of the task, providing additional context or information related to the task's objectives, steps, or related materials.</p>
+            </div>
+
+            <div class="task-actions">
+                <button class="archive-btn">Move to Archive</button>
+                <button class="delete-btn">Delete Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Circle at the center -->
+    <div class="circle-center"></div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: [], // Array to hold reminders
+    });
+
+    calendar.render();
+
+    // Add reminder functionality
+    document.getElementById('add-reminder-btn').addEventListener('click', function() {
+        const title = document.getElementById('reminder-title').value;
+        const date = document.getElementById('reminder-date').value;
+
+        if (title && date) {
+            calendar.addEvent({
+                title: title,
+                start: date,
+                allDay: true
+            });
+            // Clear inputs
+            document.getElementById('reminder-title').value = '';
+            document.getElementById('reminder-date').value = '';
+        } else {
+            alert('Please fill in both fields.');
+        }
+    });
+});
+
+function openNav() {
+    document.getElementById("mySidebar").classList.add("expanded");
+    document.getElementById("openSidebarBtn").style.display = 'none'; // Hide the hamburger icon
+    document.getElementById("closeBtn").style.display = 'block'; // Show the close icon
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").classList.remove("expanded");
+    document.getElementById("openSidebarBtn").style.display = 'block'; // Show the hamburger icon
+    document.getElementById("closeBtn").style.display = 'none'; // Hide the close icon
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+    const currentMode = document.body.classList.contains("dark-mode") ? "dark" : "light";
+    localStorage.setItem("mode", currentMode);
+    updateDarkModeIcons();
+}
+
+function updateDarkModeIcons() {
+    const darkModeLink = document.querySelector('.sidebar a:nth-last-child(2) i');
+    const darkModeText = document.querySelector('.sidebar a:nth-last-child(2) span');
+    if (document.body.classList.contains("dark-mode")) {
+        darkModeLink.classList.remove('fa-moon');
+        darkModeLink.classList.add('fa-sun');
+        darkModeText.textContent = "Light Mode";
+    } else {
+        darkModeLink.classList.remove('fa-sun');
+        darkModeLink.classList.add('fa-moon');
+        darkModeText.textContent = "Dark Mode";
+    }
+    // Change the TaskMaster text color in dark mode
+    document.querySelector('.taskmaster-text').style.color = document.body.classList.contains("dark-mode") ? 'green' : 'green';
+    // Change the TaskMaster icon color in dark mode
+    document.querySelector('.header h1 i').style.color = document.body.classList.contains("dark-mode") ? 'green' : 'green';
+
+}
+
+// Load previous mode
+window.onload = () => {
+    const savedMode = localStorage.getItem("mode");
+    if (savedMode === "dark") {
+        toggleDarkMode();
+    }
+    // Hide the close button on page load
+    document.getElementById("closeBtn").style.display = 'none';
+};
+    </script>
+</body>
+</html>

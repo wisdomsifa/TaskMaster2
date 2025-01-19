@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Recovery</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white; /* White background */
+            color: black;
+        }
+
+        /* Centered TaskMaster Header */
+        .header {
+            text-align: center;
+            margin: 50px 0 20px; /* Space between TaskMaster and container */
+        }
+
+        .header h1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            font-size: 24px;
+            color: black;
+        }
+
+        .header h1 img {
+            margin-right: 10px;
+            width: 24px; /* Icon size */
+            height: 24px;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: white;
+            width: 500px;
+            margin: 0 auto; /* Center the container */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 22px;
+            color: black;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%; /* Uniform input width */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            box-sizing: border-box; /* Ensures padding is included in total width */
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #00c853; /* Green button */
+            color: white;
+            font-size: 14px;
+            width: 100%; /* Button takes full width */
+            box-sizing: border-box; /* Ensures padding is included in total width */
+        }
+
+        button:hover {
+            background-color: #009624; /* Darker green on hover */
+        }
+
+        /* Link Styles */
+        .link-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .link-container a {
+            color: #00c853; /* Link color */
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .link-container a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Centered Header with TaskMaster Icon -->
+    <div class="header">
+        <h1>
+            <img src="https://via.placeholder.com/24" alt="Grid Icon"> <!-- Placeholder for Grid Icon -->
+            TaskMaster
+        </h1>
+    </div>
+
+    <!-- Password Recovery Form -->
+    <div class="form-container">
+        <h2>Password Recovery</h2>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email address" required>
+
+        <button type="submit">Send Recovery Link</button>
+
+        <div class="link-container">
+            <a href="login.html">Back to Login</a>
+            <a href="create-account.html">Create Account</a>
+        </div>
+    </div>
+</body>
+</html>
